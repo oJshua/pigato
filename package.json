@@ -16,14 +16,14 @@
     "micro-services"
   ],
   "dependencies": {
-    "async": "~1.5.2",
-    "debug": "~2.2.0",
-    "es6-shim": "^0.33.13",
-    "lodash": "~4.2.1",
-    "node-uuid": "~1.4.7",
-    "readable-stream": "2.0.4",
-    "semver": "^5.0.3",
-    "zmq": "~2.15.2"
+    "async": "~2.6.0",
+    "debug": "~3.1.0",
+    "es6-shim": "^0.35.3",
+    "lodash": "~4.17.4",
+    "node-uuid": "~1.4.8",
+    "readable-stream": "2.3.3",
+    "semver": "^5.4.1",
+    "zmq": "~2.15.3"
   },
   "engine": {
     "node": ">=0.10"
@@ -34,8 +34,8 @@
     "test": "test"
   },
   "devDependencies": {
-    "chai": "~3.2.0",
-    "mocha": "~2.2.5"
+    "chai": "~4.1.2",
+    "mocha": "~4.0.1"
   },
   "scripts": {
     "test": "make test",
@@ -51,6 +51,6 @@
   },
   "homepage": "https://github.com/prdn/pigato",
   "optionalDependencies": {
-    "eslint": "~1.6.0"
+    "eslint": "~4.11.0"
   }
 }
