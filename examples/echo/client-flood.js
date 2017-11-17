@@ -1,32 +1,34 @@
-var Client = require('./../../index').Client;
-var conf = require('../config.json');
+var Client = require('./../../index').Client
+var conf = require('../config.json')
 
-var client = new Client(conf.broker.host);
-client.start();
+var client = new Client(conf.broker.host)
+client.start()
 
-client.on('error', function(e) {
+client.on('error', function (e) {
   if (e === 'ERR_REQ_INVALID') {
-    inv++;
+    inv++
   }
-  console.log('ERROR', e);
-});
+  console.log('ERROR', e)
+})
 
-var d1 = new Date();
-var reqs = 100000;
+var d1 = new Date()
+var reqs = 100000
 
-var rcnt = 0;
-var inv = 0;
+var rcnt = 0
+var inv = 0
 
 for (var i = 0; i < reqs; i++) {
   client.request(
-    'echo', 'foo', 
-    function(err, data) {},
-    function(err, data) {
-      rcnt++;
+    'echo',
+    'foo',
+    function (err, data) {},
+    function (err, data) {
+      rcnt++
       if (rcnt === reqs) {
-        console.log(reqs + ' requests/replies processed (' + ((new Date()).getTime() - d1.getTime()) + ' milliseconds)', 'inv=' + inv);
-        process.exit(0);
+        console.log(reqs + ' requests/replies processed (' + (new Date().getTime() - d1.getTime()) + ' milliseconds)', 'inv=' + inv)
+        process.exit(0)
       }
-    }, { timeout: 10000 }
-  );
+    },
+    { timeout: 10000 }
+  )
 }

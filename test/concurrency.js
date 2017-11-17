@@ -1,73 +1,72 @@
-var PIGATO = require('../');
-var chai = require('chai');
-var uuid = require('node-uuid');
+var PIGATO = require('../')
+var chai = require('chai')
+var uuidv4 = require('uuid/v4')
 
-var bhost = 'inproc://#' + uuid.v4();
-//var bhost = 'tcp://0.0.0.0:2020';
+var bhost = 'inproc://#' + uuidv4()
+// var bhost = 'tcp://0.0.0.0:2020';
 
-var broker = new PIGATO.Broker(bhost);
+var broker = new PIGATO.Broker(bhost)
 
-describe('CONCURRENCY', function() {
-  
-  before(function(done) {
-    broker.conf.onStart = done;
-    broker.start();
-  });
-  
-  after(function(done) {
-    broker.conf.onStop = done;
-    broker.stop();
-  });
+describe('CONCURRENCY', function () {
+  before(function (done) {
+    broker.conf.onStart = done
+    broker.start()
+  })
 
-  it('Base', function(done) {
-    var ns = uuid.v4();
-    var chunk = 'bar';
+  after(function (done) {
+    broker.conf.onStop = done
+    broker.stop()
+  })
 
-    var cc = 20;
+  it('Base', function (done) {
+    var ns = uuidv4()
+    var chunk = 'bar'
 
-    var worker = new PIGATO.Worker(bhost, ns, { concurrency: cc });
+    var cc = 20
 
-    var reqIx = 0;
+    var worker = new PIGATO.Worker(bhost, ns, { concurrency: cc })
 
-    worker.on('request', function(inp, res) {
-      ++reqIx;
+    var reqIx = 0
 
-      var it = setInterval(function() {
+    worker.on('request', function (inp, res) {
+      ++reqIx
+
+      var it = setInterval(function () {
         if (reqIx < cc) {
-          return;
+          return
         }
 
-        clearInterval(it);
+        clearInterval(it)
 
-        res.end(chunk);
-      }, 10);
-    });
+        res.end(chunk)
+      }, 10)
+    })
 
-    worker.start();
+    worker.start()
 
-    var client = new PIGATO.Client(bhost);
-    client.start();
+    var client = new PIGATO.Client(bhost)
+    client.start()
 
-    var repIx = 0;
+    var repIx = 0
 
     for (var i = 0; i < cc; i++) {
       client.request(
         ns, chunk,
         undefined,
-        function(err, data) {
-          chai.assert.deepEqual(data, chunk);
-          ++repIx;
+        function (err, data) {
+          chai.assert.deepEqual(data, chunk)
+          ++repIx
           if (repIx === cc) {
-            stop();
+            stop()
           }
         }
-      );
+      )
     }
 
-    function stop() {
-      worker.stop();
-      client.stop();
-      done();
+    function stop () {
+      worker.stop()
+      client.stop()
+      done()
     }
-  });
-});
+  })
+})

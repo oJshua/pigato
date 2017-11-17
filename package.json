@@ -1,6 +1,6 @@
 {
-  "name": "pigato",
-  "version": "0.0.46",
+  "name": "@rabbotio/pigato",
+  "version": "0.0.47",
   "private": false,
   "description": "An high-performance Node.js microservices framework based on ZeroMQ",
   "author": "prdn <paolo.ardoino@gmail.com> (http://ardoino.com/)",
@@ -20,9 +20,9 @@
     "debug": "~3.1.0",
     "es6-shim": "^0.35.3",
     "lodash": "~4.17.4",
-    "node-uuid": "~1.4.8",
     "readable-stream": "2.3.3",
     "semver": "^5.4.1",
+    "uuid": "^3.1.0",
     "zmq": "~2.15.3"
   },
   "engine": {
